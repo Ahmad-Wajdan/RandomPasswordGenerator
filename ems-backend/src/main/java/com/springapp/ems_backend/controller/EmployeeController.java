@@ -21,14 +21,11 @@ import com.springapp.ems_backend.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "http://localhost:5173")
-@AllArgsConstructor
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/employees")
-@RequiredArgsConstructor
 public class EmployeeController {
 
-	@Autowired
 	private final EmployeeService employeeService;
 	
 	public EmployeeController(EmployeeService employeeService) {

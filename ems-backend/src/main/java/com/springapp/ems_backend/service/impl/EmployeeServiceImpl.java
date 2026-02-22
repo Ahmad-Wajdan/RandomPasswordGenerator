@@ -11,65 +11,56 @@ import com.springapp.ems_backend.mapper.EmployeeMapper;
 import com.springapp.ems_backend.repository.EmployeeRepository;
 import com.springapp.ems_backend.service.EmployeeService;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@AllArgsConstructor
-@RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
-	
-	private final EmployeeRepository employeeRepository ;
-	
-	public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+
+    private final EmployeeRepository employeeRepository;
+    
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
-	
-	@Override
-	public EmployeeDto createEmployee(EmployeeDto employeeDto) {
-		
-		Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
-		Employee savedEmploye = employeeRepository.save(employee); 
-		return EmployeeMapper.mapToEmployeeDto(savedEmploye);
-	}
 
-	@Override
-	public EmployeeDto getEmployeeById(Long id) {
+    @Override
+    public EmployeeDto createEmployee(EmployeeDto employeeDto) {
+        Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
+        Employee savedEmployee = employeeRepository.save(employee);
+        return EmployeeMapper.mapToEmployeeDto(savedEmployee);
+    }
 
-		 Employee employee = employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee Doesn't Exist"));
-		 
-		return EmployeeMapper.mapToEmployeeDto(employee);
-	}
+    @Override
+    public EmployeeDto getEmployeeById(Long id) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee Doesn't Exist"));
+        return EmployeeMapper.mapToEmployeeDto(employee);
+    }
 
+    @Override
+    public List<EmployeeDto> getAllEmployee() {
+        return employeeRepository.findAll()
+                .stream()
+                .map(EmployeeMapper::mapToEmployeeDto)
+                .collect(Collectors.toList());
+    }
 
-	@Override
-	public List<EmployeeDto> getAllEmployee() {
+    @Override
+    public EmployeeDto updateEmployeeById(Long id, EmployeeDto updatedEmployee) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee Doesn't Exist"));
 
-		
-		return employeeRepository.findAll().stream().map((employee) -> EmployeeMapper.mapToEmployeeDto(employee))
-				.collect(Collectors.toList());
-	}
+        employee.setFirstName(updatedEmployee.getFirstName());
+        employee.setLastName(updatedEmployee.getLastName());
+        employee.setEmail(updatedEmployee.getEmail());
 
-	@Override
-	public EmployeeDto updateEmployeeById(Long id, EmployeeDto updatedEmployee) {
+        Employee updatedEmployeeObj = employeeRepository.save(employee);
+        return EmployeeMapper.mapToEmployeeDto(updatedEmployeeObj);
+    }
 
-		Employee employee = employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee Doesn't Exist"));
-		
-		employee.setFirstName(updatedEmployee.getFirstName());
-		employee.setLastName(updatedEmployee.getLastName());
-		employee.setEmail(updatedEmployee.getEmail());
-		
-		Employee updatedEmployeeObj = employeeRepository.save(employee);
-		return EmployeeMapper.mapToEmployeeDto(updatedEmployeeObj);
-	}
-
-	@Override
-	public void deleteEmployee(Long id) {
-
-		Employee employee = employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee Doesn't Exist"));
-		
-		employeeRepository.delete(employee);
-
-	}
-
+    @Override
+    public void deleteEmployee(Long id) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee Doesn't Exist"));
+        employeeRepository.delete(employee);
+    }
 }

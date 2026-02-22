@@ -1,29 +1,15 @@
 package com.springapp.ems_backend.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class EmployeeDto {
-	private long id;
-	private String firstName;
-	private String lastName;
-	private String email;
-	
-	
-	
-	public EmployeeDto(long id, String firstName, String lastName, String email) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-	}
+    private long id;
+    private String firstName;
+    private String lastName;
+    private String email;
 	public long getId() {
 		return id;
 	}
@@ -48,4 +34,17 @@ public class EmployeeDto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public EmployeeDto(long id, String firstName, String lastName, String email) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+	}
+	public EmployeeDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+    
+    
 }

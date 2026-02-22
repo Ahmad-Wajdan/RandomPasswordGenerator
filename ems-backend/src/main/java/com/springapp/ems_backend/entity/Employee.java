@@ -16,10 +16,6 @@ import lombok.Setter;
 
 @Transactional
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name="employees")
 
 public class Employee {
@@ -36,19 +32,6 @@ public class Employee {
 	
 	@Column(name="email_id", nullable = false, unique = true)
 	private String email;
-
-	public Employee() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
-	public Employee(Long id, String firstName, String lastName, String email) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-	}
 
 	public Long getId() {
 		return id;
@@ -81,5 +64,21 @@ public class Employee {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public Employee(Long id, String firstName, String lastName, String email) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+	}
+
+	public Employee() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	
+	
 	
 }
